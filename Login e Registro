@@ -1,0 +1,103 @@
+CREATE TABLE `usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+// configurações de conexão com o banco de dados
+$host = “localhost”;
+$dbname = “nome_do_banco”;
+$username = “usuario”;
+$password = “senha”;
+
+// conexão com o banco de dados utilizando PDO
+Try {
+    $pdo = new PDO(“mysql:host=$host;dbname=$dbname;charset=utf8”, $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    Echo “Erro ao conectar ao banco de dados: “ . $e->getMessage();
+}
+
+
+<form method=”post” action=”cadastro.php”>
+    <label>Nome:</label>
+    <input type=”text” name=”nome” required>
+
+    <label>Email:</label>
+    <input type=”email” name=”email” required>
+
+    <label>Senha:</label>
+    <input type=”password” name=”senha” required>
+
+    <button type=”submit”>Cadastrar</button>
+</form>
+
+
+
+
+
+<?php
+// conexão com o banco de dados
+Require_once “conexao.php”;
+
+// verifica se o formulário foi enviado
+If ($_SERVER[“REQUEST_METHOD”] == “POST”) {
+    // obtém os dados do formulário
+    $nome = $_POST[“nome”];
+    $email = $_POST[“email”];
+    $senha = password_hash($_POST[“senha”], PASSWORD_DEFAULT);
+
+    // insere os dados na tabela de usuários
+    $sql = “INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)”;
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(“:nome”, $nome);
+    $stmt->bindParam(“:email”, $email);
+    $stmt->bindParam(“:senha”, $senha);
+
+    If ($stmt->execute()) {
+        // redireciona para a página de login
+        Header(“Location: login.php”);
+        Exit;
+    } else {
+        Echo “Erro ao cadastrar usuário”;
+    }
+}
+?>
+
+
+
+
+<form method=”post” action=”login.php”>
+    <label>Email:</label>
+    <input type=”email” name=”email” required>
+
+    <label>Senha:</label>
+    <input type=”password” name=”senha” required>
+
+    <button type=”submit”>Entrar</button>
+</form>
+
+
+
+<?php
+// conexão com o banco de dados
+Require_once “conexao.php”;
+
+// verifica se o formulário foi enviado
+If ($_SERVER[“REQUEST_METHOD”] == “POST”) {
+    // obtém os dados do formulário
+    $email = $_POST[“email”];
+    $senha = $_POST[“senha”];
+
+    // busca o usuário pelo email
+    $sql = “SELECT *
+
+
+
+
+
