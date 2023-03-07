@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gráfico de 6 linhas com menu lateral e mini gráficos</title>
+	<!-- Adicione os arquivos CSS e JavaScript necessários aqui -->
+</head>
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<!-- Adicione o menu lateral aqui -->
+		</div>
+		<div class="content">
+			<div class="chart-container">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div class="mini-charts-container">
+				<!-- Adicione os mini gráficos aqui -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<?php
+// Gerar dados aleatórios para o gráfico principal
+$dataPoints = array();
+$labels = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho");
+for ($i = 0; $i < 6; $i++) {
+    $dataPoints[] = rand(100, 500);
+}
+// Gerar dados aleatórios para os mini gráficos
+$miniChartDataPoints = array();
+$miniChartLabels = array("A", "B", "C", "D");
+for ($i = 0; $i < 4; $i++) {
+    $miniChartDataPoints[] = rand(50, 150);
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gráfico de 6 linhas com menu lateral e mini gráficos</title>
+	<!-- Adicione os arquivos CSS e JavaScript necessários aqui -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<!-- Adicione o menu lateral aqui -->
+		</div>
+		<div class="content">
+			<div class="chart-container">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div class="mini-charts-container">
+				<!-- Adicione os mini gráficos aqui -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+		    type: 'line',
+		    data: {
+		        labels: <?php echo json_encode($labels); ?>,
+		        datasets: [{
+		            label: 'Gráfico de 6 linhas',
+		            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+		            borderColor: 'rgba(255, 99, 132, 1)',
+		            data: <?php echo json_encode($dataPoints
+
