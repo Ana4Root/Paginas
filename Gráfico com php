@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=”UTF-8”>
+    <title>Página Web Moderna</title>
+    <link rel=”stylesheet” href=”style.css”>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href=”#”>Item 1</a></li>
+        <li><a href=”#”>Item 2</a></li>
+        <li><a href=”#”>Item 3</a></li>
+        <li><a href=”#”>Item 4</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h1>Gráfico Principal</h1>
+      <div id=”chart”></div>
+      <div class=”mini-charts”>
+        <div class=”mini-chart”>
+          <h2>Mini Gráfico 1</h2>
+          <div id=”mini-chart-1”></div>
+        </div>
+        <div class=”mini-chart”>
+          <h2>Mini Gráfico 2</h2>
+          <div id=”mini-chart-2”></div>
+        </div>
+        <div class=”mini-chart”>
+          <h2>Mini Gráfico 3</h2>
+          <div id=”mini-chart-3”></div>
+        </div>
+        <div class=”mini-chart”>
+          <h2>Mini Gráfico 4</h2>
+          <div id=”mini-chart-4”></div>
+        </div>
+      </div>
+    </main>
+    <script src=”script.js”></script>
+  </body>
+</html>
+
+
+
+Body {
+  Margin: 0;
+  Padding: 0;
+  Font-family: sans-serif;
+}
+
+Nav {
+  Width: 200px;
+  Height: 100vh;
+  Background-color: #333;
+  Color: #fff;
+  Position: fixed;
+  Top: 0;
+  Left: 0;
+}
+
+Nav ul {
+  List-style: none;
+  Padding: 0;
+  Margin: 0;
+}
+
+Nav ul li {
+  Padding: 20px;
+  Border-bottom: 1px solid #666;
+}
+
+Nav ul li a {
+  Color: #fff;
+  Text-decoration: none;
+}
+
+Main {
+  Margin-left: 200px;
+  Padding: 20px;
+}
+
+H1 {
+  Font-size: 24px;
+  Margin-bottom: 20px;
+}
+
+#chart {
+  Width: 600px;
+  Height: 400px;
+  Background-color: #eee;
+  Margin-bottom: 20px;
+}
+
+.mini-charts {
+  Display: flex;
+  Flex-wrap: wrap;
+}
+
+.mini-chart {
+  Width: calc(25% - 20px);
+  Margin-right: 20px;
+  Margin-bottom: 20px;
+  Background-color: #eee;
+  Padding: 20px;
+  Box-sizing: border-box;
+}
+
+.mini-chart h2 {
+  Font-size: 18px;
+  Margin-top: 0;
+  Margin-bottom: 10px;
+}
+
+#mini-chart-1, #mini-chart-2, #mini-chart-3, #mini-chart-4 {
+  Width: 100%;
+  Height: 100%;
+}
+
+
+// Criação do gráfico principal
+Var ctx = document.getElementById(‘chart’).getContext(‘2d
+
+// Dados de exemplo
+$datas = [‘2022-01-01’, ‘2022-01-02’, ‘2022-01-03’, ‘2022-01-04’, ‘2022-01-05’];
+$valores = [10, 20, 15, 25, 30];
+
+// Transforma as datas no formato adequado para o JavaScript
+$datas_formatadas = array_map(function($d) {
+    Return date(‘Y-m-d’, strtotime($d));
+}, $datas);
+
+// Codifica os dados em JSON
+$dados_json = json_encode([
+    ‘datas’ => $datas_formatadas,
+    ‘valores’ => $valores
+]);
+
+
+
+
+<!—Inclui a biblioteca Chart.js 
+<script src=https://cdn.jsdelivr.net/npm/chart.js></script>
+
+<!—Cria um elemento canvas para o gráfico 
+<canvas id=”meu-grafico”></canvas>
+
+<script>
+// Obtém os dados do PHP e decodifica o JSON
+Const dados = <?= $dados_json ?>;
+Const datas = dados.datas;
+Const valores = dados.valores;
+
+// Cria o gráfico
+Const ctx = document.getElementById(‘meu-grafico’).getContext(‘2d’);
+Const grafico = new Chart(ctx, {
+    Type: ‘line’,
+    Data: {
+        Labels: datas,
+        Datasets: [{
+            Label: ‘Valores’,
+            Data: valores,
+            backgroundColor: ‘rgba(255, 99, 132, 0.2)’,
+            borderColor: ‘rgba(255, 99, 132, 1)’,
+            borderWidth: 1
+        }]
+    },
+    Options: {}
+});
+</script>
+
+
