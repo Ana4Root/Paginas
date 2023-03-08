@@ -65,5 +65,20 @@ var chart = new Chart(ctx, {
                     if (label) {
                         label += ': ';
                     }
-                    label
+                    label = tooltipItem.yLabel;
+if (tooltipItem.datasetIndex === 0) {
+label += '\n\nMínimo: ' + data.datasets[0].data[0].min;
+label += '\n1° Quadrante: ' + data.datasets[0].data[0].q1;
+label += '\nMediana: ' + data.datasets[0].data[0].median;
+label += '\n3° Quadrante: ' + data.datasets[0].data[0].q3;
+label += '\nMáximo: ' + data.datasets[0].data[0].max;
+label += '\nOutliers: ' + data.datasets[0].data[0].outliers.join(", ");
+}
+return label;
+}
+}
+}
+}
+});
+</script>
 
