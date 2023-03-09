@@ -93,3 +93,26 @@
 	});
 </script>
 
+<?php
+// Definir o tipo de conteúdo como JSON
+header('Content-Type: application/json');
+
+// Dados do boxplot
+$data = array(
+    array("name" => "Categoria 1", "data" => array(50, 60, 70)), // valores da mediana, primeiro quartil e terceiro quartil para Categoria 1
+    array("name" => "Categoria 2", "data" => array(45, 55, 65)), // valores da mediana, primeiro quartil e terceiro quartil para Categoria 2
+    // adicione mais categorias aqui, se necessário
+);
+
+// Configurações do gráfico
+$chartOptions = array(
+    'chart' => array('type' => 'boxplot'),
+    'title' => array('text' => 'Boxplot usando Highcharts e PHP'),
+    'xAxis' => array('categories' => array('Categoria 1', 'Categoria 2')),
+    'yAxis' => array('title' => array('text' => 'Valores')),
+    'series' => $data
+);
+
+// Saída do JSON
+echo json_encode($chartOptions);
+?>
