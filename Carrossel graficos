@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Modern Page with Charts</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+	<!-- Main graph -->
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-md-12">
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<!-- Carousel with 4 graphics -->
+	<div class="container mt-5">
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<canvas id="chart1"></canvas>
+				</div>
+				<div class="carousel-item">
+					<canvas id="chart2"></canvas>
+				</div>
+				<div class="carousel-item">
+					<canvas id="chart3"></canvas>
+				</div>
+				<div class="carousel-item">
+					<canvas id="chart4"></canvas>
+				</div>
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+
+	<?php
+	// Dados de exemplo para o gráfico principal
+	$labels = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho");
+	$data = array(20, 25, 30, 35, 40, 45, 50);
+
+	// Dados de exemplo para os gráficos do carrossel
+	$data1 = array(10, 20, 30, 40, 50, 60, 70);
+	$data2 = array(5, 15, 25, 35, 45, 55, 65);
+	$data3 =
