@@ -1,118 +1,40 @@
-<!DOCTYPE html>
+$data = array(
+    array("type" => "boxAndWhisker", "lowerBoxColor" => "#9BBFD4", "upperBoxColor" => "#8CA6AD", 
+          "dataPoints" => array(
+            array("label" => "Categoria 1", "x" => 1, "minimum" => 30, "maximum" => 90, "median" => 60, "mean" => 55, "q1" => 50, "q3" => 70), 
+            array("label" => "Categoria 2", "x" => 2, "minimum" => 25, "maximum" => 80, "median" => 55, "mean" => 50, "q1" => 45, "q3" => 65), 
+            // adicione mais categorias aqui, se necessário
+          )
+    )
+);
+
+<!DOCTYPE HTML>
 <html>
-<head>
-	<title>Gráfico de Boxplot</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<head>  
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Boxplot usando Canvas.js e PHP"
+                },
+                axisY:{
+                    title: "Valores",
+                    includeZero: false
+                },
+                axisX:{
+                    title: "Categorias",
+                    interval: 1
+                },
+                data: <?php echo json_encode($data, JSON_NUMERIC_CHECK); ?>
+            });
+            chart.render();
+        }
+    </script>
 </head>
 <body>
-	<div style="width: 50%;">
-		<canvas id="myChart"></canvas>
-	</div>
-
-	<?php
-	// Dados de exemplo
-	$data = array(20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90);
-
-	// Cálculo dos valores de quartis, mediana e outliers
-	$min = min($data);
-	$max = max($data);
-	$mediana = median($data);
-	$primeiro_quartil = quartile($data, 25);
-	$terceiro_quartil = quartile($data, 75);
-	$iqr = $terceiro_quartil - $primeiro_quartil;
-	$outliers = array();
-
-	foreach ($data as $value) {
-	    if ($value < ($primeiro_quartil - 1.5 * $iqr) || $value > ($terceiro_quartil + 1.5 * $iqr)) {
-	        array_push($outliers, $value);
-	    }
-	}
-
-	function quartile($data, $percentile) {
-	    sort($data);
-	    $index = ($percentile / 100) * count($data);
-	    if (floor($index) == $index) {
-	        $result = ($data[$index-1] + $data[$index]) / 2;
-	    } else {
-	        $result = $data[floor($index)];
-	    }
-	    return $result;
-	}
-
-	function median($data) {
-	    return quartile($data, 50);
-	}
-	?>
-
-	<script>
-	var ctx = document.getElementById('myChart');
-	var myChart = new Chart(ctx, {
-	    type: 'boxplot',
-	    data: {
-	        labels: [''],
-	        datasets: [{
-	            label: 'Boxplot',
-	            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-	            borderColor: 'rgba(255, 99, 132, 1)',
-	            borderWidth: 1,
-	            outlierRadius: 4,
-	            itemRadius: 0,
-	            data: [{
-	                // Valores do boxplot
-	                q1: <?php echo $primeiro_quartil; ?>,
-	                q2: <?php echo $mediana; ?>,
-	                q3: <?php echo $terceiro_quartil; ?>,
-	                whiskerMin: <?php echo $min; ?>,
-	                whiskerMax: <?php echo $max; ?>,
-	                outliers: <?php echo json_encode($outliers); ?>,
-	            }]
-	        }]
-	    },
-	    options: {
-	        title: {
-	            display: true,
-	            text: 'Gráfico de Boxplot'
-	        },
-	        tooltips: {
-	            callbacks: {
-	                label: function(tooltipItem, data) {
-	                    var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-	                    var dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-	                    var label = datasetLabel + ': ';
-	                    if (tooltipItem.datasetIndex === 0) {
-	                        label += 'Whisker min: ' + dataPoint.whiskerMin + ', Q1: ' + dataPoint.q1 + ', Median: ' + dataPoint.q2 + ', Q3: ' + dataPoint.q3 + ', Whisker max: ' + dataPoint.whiskerMax;
-	                        if (dataPoint.outliers.length > 0) {
-	                            label += ', Outliers: ' + dataPoint.outliers.join(', ');
-	                        }
-	                    }
-	                    return label;
-	                }
-	            }
-	        }
-	    }
-	});
-</script>
-
-<?php
-// Definir o tipo de conteúdo como JSON
-header('Content-Type: application/json');
-
-// Dados do boxplot
-$data = array(
-    array("name" => "Categoria 1", "data" => array(50, 60, 70)), // valores da mediana, primeiro quartil e terceiro quartil para Categoria 1
-    array("name" => "Categoria 2", "data" => array(45, 55, 65)), // valores da mediana, primeiro quartil e terceiro quartil para Categoria 2
-    // adicione mais categorias aqui, se necessário
-);
-
-// Configurações do gráfico
-$chartOptions = array(
-    'chart' => array('type' => 'boxplot'),
-    'title' => array('text' => 'Boxplot usando Highcharts e PHP'),
-    'xAxis' => array('categories' => array('Categoria 1', 'Categoria 2')),
-    'yAxis' => array('title' => array('text' => 'Valores')),
-    'series' => $data
-);
-
-// Saída do JSON
-echo json_encode($chartOptions);
-?>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</body>
+</html>
