@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gráfico de Boxplot</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div style="width: 50%;">
+		<canvas id="myChart"></canvas>
+	</div>
+
+	<?php
+	// Dados de exemplo
+	$data = array(20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90);
+
+	// Cálculo dos valores de quartis, mediana e outliers
+	$min = min($data);
+	$max = max($data);
+	$mediana = median($data);
+	$primeiro_quartil = quartile($data, 25);
+	$terceiro_quartil = quartile($data, 75);
+	$iqr = $terceiro_quartil - $primeiro_quartil;
+	$outliers = array();
+
+	foreach ($data as $value) {
+	    if ($value < ($primeiro_quartil - 1.5 * $iqr) || $value > ($terceiro_quartil + 1.5 * $iqr)) {
+	        array_push($outliers, $value);
+	    }
+	}
+
+	function quartile($data, $percentile) {
+	    sort($data);
+	    $index = ($percentile / 100) * count($data);
+	    if (floor($index) == $index) {
+	        $result = ($data[$index-1] + $data[$index]) / 2;
+	    } else {
+	        $result = $data[floor($index)];
+	    }
+	    return $result;
+	}
+
+	function median($data) {
+	    return quartile($data, 50);
+	}
+	?>
+
+	<script>
+	var ctx = document.getElementById('myChart');
+	var myChart = new Chart(ctx, {
+	    type: 'boxplot',
+	    data: {
+	        labels: [''],
+	        datasets: [{
+	            label: 'Boxplot',
+	            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+	            borderColor: 'rgba(255, 99, 132, 1)',
+	            borderWidth: 1,
+	            outlierRadius: 4,
+	            itemRadius: 0,
+	            data: [{
+	                // Valores do boxplot
+	                q1: <?php echo $primeiro_quartil; ?>,
+	                q2: <?php echo $mediana; ?>,
+	                q3: <?php echo $terceiro_quartil; ?>,
+	                whiskerMin: <?php echo $min; ?>,
+	                whiskerMax: <?php echo $max; ?>,
+	                outliers: <?php echo json_encode($outliers); ?>,
+	            }]
+	        }]
+	    },
+	    options: {
+	        title: {
+	            display: true,
+	            text: 'Gráfico de Boxplot'
+	        },
+	        tooltips: {
+	            callbacks: {
+	                label: function(tooltipItem, data) {
+	                    var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+	                    var dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+	                    var label = datasetLabel + ': ';
+	                    if (tooltipItem.datasetIndex === 0) {
+	                        label += 'Whisker min: ' + dataPoint.whiskerMin + ', Q1: ' + dataPoint.q1 + ', Median: ' + dataPoint.q2 + ', Q3: ' + dataPoint.q3 + ', Whisker max: ' + dataPoint.whiskerMax;
+	                        if (dataPoint.outliers.length > 0) {
+	                            label += ', Outliers: ' + dataPoint.outliers.join(', ');
+	                        }
+	                    }
+	                    return label;
+	                }
+	            }
+	        }
+	    }
+	});
+</script>
+
