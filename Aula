@@ -1,0 +1,36 @@
+<?php
+$numero = 15; // substitua o número aqui
+
+if ($numero % 10 == 0) {
+    echo $numero . " é divisível por 10";
+} elseif ($numero % 5 == 0) {
+    echo $numero . " é divisível por 5";
+} elseif ($numero % 2 == 0) {
+    echo $numero . " é divisível por 2";
+} else {
+    echo $numero . " não é divisível por 10, 5 ou 2";
+}
+?>
+
+<?php
+// Lê os três números
+$a = 3; // substitua pelo valor do primeiro lado
+$b = 4; // substitua pelo valor do segundo lado
+$c = 5; // substitua pelo valor do terceiro lado
+
+// Verifica se é possível formar um triângulo
+if ($a >= $b + $c || $b >= $a + $c || $c >= $a + $b) {
+    echo "Não é possível formar um triângulo com esses lados.";
+} else {
+    // Verifica o tipo de triângulo
+    if ($a == $b && $b == $c) {
+        echo "O triângulo é equilátero.";
+    } elseif ($a == $b || $a == $c || $b == $c) {
+        echo "O triângulo é isósceles.";
+    } else {
+        echo "O triângulo é escaleno.";
+    }
+}
+?>
+
+
