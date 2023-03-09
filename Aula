@@ -1,5 +1,6 @@
+//exercício 1
 <?php
-$numero = 15; // substitua o número aqui
+$numero = 15;
 
 if ($numero % 10 == 0) {
     echo $numero . " é divisível por 10";
@@ -12,17 +13,18 @@ if ($numero % 10 == 0) {
 }
 ?>
 
-<?php
-// Lê os três números
-$a = 3; // substitua pelo valor do primeiro lado
-$b = 4; // substitua pelo valor do segundo lado
-$c = 5; // substitua pelo valor do terceiro lado
 
-// Verifica se é possível formar um triângulo
+
+<?php
+$a = 3; 
+$b = 4; 
+$c = 5; 
+
+
 if ($a >= $b + $c || $b >= $a + $c || $c >= $a + $b) {
     echo "Não é possível formar um triângulo com esses lados.";
 } else {
-    // Verifica o tipo de triângulo
+  
     if ($a == $b && $b == $c) {
         echo "O triângulo é equilátero.";
     } elseif ($a == $b || $a == $c || $b == $c) {
@@ -32,5 +34,12 @@ if ($a >= $b + $c || $b >= $a + $c || $c >= $a + $b) {
     }
 }
 ?>
+// exercício 3
+numero = int(input("Digite um número: "))
+
+produto = 1
+for i in range(1, numero + 1):
+    produto *= i
+    print(i, produto)
 
 
