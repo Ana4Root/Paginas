@@ -55,3 +55,119 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+      }
+
+      /* Cabeçalho */
+      .header {
+        background-color: #f1f1f1;
+        padding: 30px;
+        text-align: center;
+        font-size: 20px;
+      }
+
+      /* Caixas de informações */
+      .info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px;
+      }
+
+      .info input[type="text"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+      }
+
+      /* Gráficos */
+      .charts {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px;
+      }
+
+      .chart {
+        width: 400px;
+        height: 300px;
+        margin: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .chart-title {
+        background-color: #f1f1f1;
+        padding: 10px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      /* Responsividade */
+      @media screen and (max-width: 800px) {
+        .charts {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .chart {
+          width: 80%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cabeçalho -->
+    <div class="header">
+      <h1>Dashboard</h1>
+    </div>
+
+    <!-- Caixas de informações -->
+    <div class="info">
+      <input type="text" placeholder="Peça">
+      <input type="text" placeholder="Data">
+      <input type="text" placeholder="Nome">
+    </div>
+
+    <!-- Gráficos -->
+    <div class="charts">
+      <div class="chart">
+        <div class="chart-title">Gráfico de Linha 1</div>
+        <canvas id="line-chart-1"></canvas>
+      </div>
+      <div class="chart">
+        <div class="chart-title">Gráfico de Linha 2</div>
+        <canvas id="line-chart-2"></canvas>
+      </div>
+      <div class="chart">
+        <div class="chart-title">Gráfico de Colunas</div>
+        <canvas id="column-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Scripts para os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Gráfico de Linha 1
+      var lineChart1 = new Chart
+
