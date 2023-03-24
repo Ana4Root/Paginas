@@ -1,60 +1,94 @@
-// Defina os dados do gráfico
-var data = {
-    labels: ['Boxplot'], // Rótulo do gráfico
-    datasets: [
-        {
-            label: 'Dados', // Rótulo do conjunto de dados
-            data: [
-                {
-                    q1: <?php echo $primeiro_quartil; ?>,
-                    q3: <?php echo $terceiro_quartil; ?>,
-                    median: <?php echo $mediana; ?>,
-                    outlier: <?php echo $outliers; ?>,
-                    min: <?php echo $limite_inferior; ?>,
-                    max: <?php echo $limite_superior; ?>
-                }
-            ]
-        }
-    ]
-};
-
-// Configurações do gráfico
-var options = {
-    responsive: true,
-    title: {
-        display: true,
-        text: 'Boxplot'
-    },
-    tooltips: {
-        callbacks: {
-            label: function(tooltipItem, data) {
-                var dataset = data.datasets[tooltipItem.datasetIndex];
-                var outlier = dataset.data[tooltipItem.index].outlier;
-                return 'Q1: ' + dataset.data[tooltipItem.index].q1 + '\n' +
-                    'Mediana: ' + dataset.data[tooltipItem.index].median + '\n' +
-                    'Q3: ' + dataset.data[tooltipItem.index].q3 + '\n' +
-                    'Limite Inferior: ' + dataset.data[tooltipItem.index].min + '\n' +
-                    'Limite Superior: ' + dataset.data[tooltipItem.index].max + '\n' +
-                    'Outliers: ' + outlier;
-            }
-        }
-    },
-    legend: {
-        display: false
-    },
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero:false
-            }
-        }]
-    }
-};
-
-// Cria o gráfico boxplot
-var ctx = document.getElementById('myBoxplot').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'boxplot',
-    data: data,
-    options: options
+$primeiroquartil = stats_distributions($peso, 'p', [0.25]);
+$mediana = stats_distributions($peso, 'p', [0.5]);
+$terceiroquartil = stats_distributions($peso, 'p', [0.75]);
+$minimo = min($peso);
+$maximo = max($peso);
+$limiteinferior = $primeiroquartil[0] - 1.5 * ($terceiroquartil[0] - $primeiroquartil[0]);
+$limitesuperior = $terceiroquartil[0] + 1.5 * ($terceiroquartil[0] - $primeiroquartil[0]);
+$outliers = array_filter($peso, function($x) use ($limiteinferior, $limitesuperior) {
+    return $x < $limiteinferior || $x > $limitesuperior;
 });
+// Definir o array de dados
+$data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+$peso = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+// Calcular os valores estatísticos
+$primeiroquartil = stats_distributions($peso, 'p', [0.25]);
+$mediana = stats_distributions($peso, 'p', [0.5]);
+$terceiroquartil = stats_distributions($peso, 'p', [0.75]);
+$minimo = min($peso);
+$maximo = max($peso);
+$limiteinferior = $primeiroquartil[0] - 1.5 * ($terceiroquartil[0] - $primeiroquartil[0]);
+$limitesuperior = $terceiroquartil[0] + 1.5 * ($terceiroquartil[0] - $primeiroquartil[0]);
+$outliers = array_filter($peso, function($x) use ($limiteinferior, $limitesuperior) {
+    return $x < $limiteinferior || $x > $limitesuperior;
+});
+
+// Adicionar os valores estatísticos ao array de dados
+$data[0] = $minimo;
+$data[1] = $primeiroquartil[0];
+$data[2] = $mediana[0];
+$data[3] = $terceiroquartil[0];
+$data[4] = $maximo;
+
+// Definir as opções do gráfico
+$options = array(
+    'chart' => array(
+        'type' => 'boxplot'
+    ),
+    'title' => array(
+        'text' => 'Gráfico de Boxplot'
+    ),
+    'xAxis' => array
+(
+'categories' => $data
+),
+'yAxis' => array(
+'title' => array(
+'text' => 'Peso'
+)
+),
+'series' => array(
+array(
+'name' => 'Valores',
+'data' => array(
+array($minimo, $primeiroquartil[0], $mediana[0], $terceiroquartil[0], $maximo)
+),
+'tooltip' => array(
+'headerFormat' => '<em>{point.key}</em><br/>',
+'pointFormat' => 'Mínimo: {point.low}<br/>'.
+'Primeiro Quartil: {point.q1}<br/>'.
+'Mediana: {point.median}<br/>'.
+'Terceiro Quartil: {point.q3}<br/>'.
+'Máximo: {point.high}<br/>'
+)
+)
+)
+);
+
+// Adicionar um plot a cada 5 dados e as labels a partir dos 5 dados
+for ($i = 5; $i < count($peso); $i += 5) {
+$data[] = $peso[$i];
+$options['xAxis']['categories'] = $data;
+$options['series'][0]['data'][] = array($minimo, $primeiroquartil[0], $mediana[0], $terceiroquartil[0], $maximo);
+}
+
+// Imprimir o gráfico
+echo "<div id='container'></div>";
+echo "<script src='https://code.highcharts.com/highcharts.js'></script>";
+echo "<script src='https://code.highcharts.com/modules/exporting.js'></script>";
+echo "<script src='https://code.highcharts.com/modules/export-data.js'></script>";
+echo "<script>";
+echo "Highcharts.chart('container', " . json_encode($options) . ");";
+echo "</script>";
+
+kotlin
+Copy code
+
+O código acima adiciona um plot a cada 5 dados do array $peso e as labels a partir dos 5 dados do array $data. O gráfico é exibido na div com o id 'container'. As opções do gráfico são definidas no array $options e passadas para a função `Highcharts.chart()`. O gráfico exibe os valores estatísticos e os outliers. O tooltip mostra os valores mínimo, primeiro quartil, mediana, terceiro quartil e máximo.
+
+
+
+
+
+ChatGPT Mar 14 Version. Fre
